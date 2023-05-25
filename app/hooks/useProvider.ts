@@ -2,12 +2,15 @@ import { providers } from "ethers";
 import { useEffect, useRef, useState } from "react";
 import Web3Modal from "web3modal";
 
+
 export const useProvider = () => {
   const web3ModalRef = useRef<Web3Modal>();
   const [walletConnected, setWalletConnected] = useState(false);
   const [provider, setProvider] = useState<
     providers.Web3Provider | undefined
   >();
+
+  const [signer, setSigner] = useState<providers.JsonRpcSigner | undefined>();
 
   const connect = () => {
     console.log("Connecting to wallet");
@@ -24,6 +27,8 @@ export const useProvider = () => {
 
         setProvider(web3Provider);
         setWalletConnected(true);
+
+        setSigner(web3Provider.getSigner());
       });
     }
   };
@@ -35,6 +40,7 @@ export const useProvider = () => {
   return {
     provider,
     getSigner: provider?.getSigner(),
+    signer,
     connect,
     isConnected: walletConnected,
   };

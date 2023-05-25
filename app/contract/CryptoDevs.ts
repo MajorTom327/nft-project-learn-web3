@@ -4,6 +4,7 @@ import { utils } from "ethers";
 import { Contract } from "ethers";
 import constants from "~/refs/constants";
 
+
 export class CryptoDevs {
   adress = constants.contractAddress;
   abi = constants.abi;
@@ -48,11 +49,11 @@ export class CryptoDevs {
 
       await tx.wait();
 
-      resolve(tx);
+      resolve(null);
     });
   }
 
-  getOwner() {
+  getOwner(): Promise<string> {
     return new Promise(async (resolve, reject) => {
       const owner = await this.contract.owner();
 
